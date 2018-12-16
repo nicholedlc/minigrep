@@ -23,6 +23,10 @@ struct Config {
 
 impl Config {
     fn new(args: &[String]) -> Config {
+        if args.len() < 3 {
+            panic!("not enough arguments");
+        }
+
         // `clone()` will make a full copy of the data for the Config instance to own,
         // which takes more time and memory than storing a reference to the string data.
         // However, cloning the data also makes our code very straightforward because we don’t have to manage the lifetimes of the references;
