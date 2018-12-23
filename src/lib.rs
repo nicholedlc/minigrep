@@ -43,8 +43,13 @@ impl Config {
     // in this circumstance, giving up a little performance to gain simplicity is a worthwhile trade-off.
     let query = args[1].clone();
     let filename = args[2].clone();
+
     // If the `CASE_INSENSITIVE` env var is set to anything, `is_err` will return false and the program will perform a case-sensitive search.
-    let case_sensitive = env::var("CASE_INSENSITIVE").is_err();
+    let mut case_sensitive = env::var("CASE_INSENSITIVE").is_err();
+    case_sensitive = match args.get(3) {
+      None => case_sensitive,
+      Some(_) => false,
+    };
 
     Ok(Config {
       query,
